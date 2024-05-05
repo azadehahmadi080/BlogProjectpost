@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Post</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <%- include("partials/header.ejs") %>
+    <% if (success) { %>
+      <div class="success-message">
+       <%= success %>
+          Success! Your post has been submitted.
+      </div>
+  <%} %>
+    <h1 class="title-post">Edit Post</h1>
+    
+    <form action="/edit/<%= post.id %>" method="post"  enctype="multipart/form-data">
+      <div  class="container">
+      <label for="title">Title:</label><br />
+      <input
+        type="text"
+        id="title"
+        name="title"
+        value="<%= post.title %>"
+        required
+        class="Feedback-input"
+      /><br />
+
+      <label for="description">Description:</label><br />
+      <textarea id="description" name="description" rows="4" cols="50"  class="Feedback-input" required>
+<%= post.description %></textarea
+      ><br />
+
+      <label for="imageUrl">Image URL:</label><br />
+      <img src="<%= post.imageUrl %>" alt="pic-image" id="profile-pic" class="img-center" name="image"><br>
+      <input
+        type="file"
+        id="imageUrl"
+        name="imageUrl"
+      /><br />
+
+      <button type="submit">Update Post</button>
+    </div>
+    </form>
+ 
+    <%- include("partials/footer.ejs") %>
+
+      <!-- About  image   -->
+   <script>
+    let profilePic =document.getElementById("profile-pic");
+       let inputFile =document.getElementById("imageUrl");
+       
+       inputFile.onchange =function(){
+        const file = inputFile.files[0];
+        if (file) {
+          profilePic.src = URL.createObjectURL(file);
+        } else {
+          profilePic.src = ""; // Clear the image if no file selected
+        }
+          
+       };
+       
+
+
+       const successMessage = document.querySelector('.success-message');
+const subbtn =document.querySelector('.subbtn')
+  successMessage.innerText = 'Post created successfully';
+     successMessage.style.display = 'block'; // Show the message
+
+     // Add fade-out effect after a few seconds
+     setTimeout(() => {
+       successMessage.style.display = 'none'; // Hide the message
+     }, 3000); // Adjust the duration as needed
+</script>
+  </body>
+</html>
